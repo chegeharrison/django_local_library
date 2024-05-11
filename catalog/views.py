@@ -29,7 +29,22 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 2
 
 
 class BookDetailView(generic.DetailView):
     model = Book
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by =2
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        author = self.object
+        books_published_by_author = author.book_set.all()
+        context['books_published_by_author'] = books_published_by_author
+        return context
