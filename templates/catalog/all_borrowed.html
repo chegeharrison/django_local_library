@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container my-5">
+    <h1 class="display-4 text-center mb-4">All Borrowed Books</h1>
+
+    {% if bookinstance_list %}
+      <ul class="list-group">
+        {% for bookinstance in bookinstance_list %}
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">{{ bookinstance.book.title }}</div>
+              Borrowed by: <strong>{{ bookinstance.borrower.get_full_name }}</strong> ({{ bookinstance.borrower.username }})
+            </div>
+            <div>
+              <span class="text-muted">Due Date:</span> <span class="badge bg-warning text-dark">{{ bookinstance.due_back }}</span>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="alert alert-info text-center mt-4" role="alert">
+        There are no borrowed books.
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
